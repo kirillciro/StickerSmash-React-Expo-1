@@ -1,13 +1,19 @@
 import { SplashScreen } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, Text, View } from "react-native";
+import { useTheme } from "../context/ThemeContext";
 
 export default function RocketSplash({ onFinish }: { onFinish: () => void }) {
+  const { theme } = useTheme();
+  const { colors } = theme;
+
   const hasFinished = useRef(false);
-  const squareFade = useRef(new Animated.Value(0)).current;
-  const squareRotate = useRef(new Animated.Value(0)).current;
+  const logoScale = useRef(new Animated.Value(0.5)).current;
+  const logoOpacity = useRef(new Animated.Value(0)).current;
   const textFade = useRef(new Animated.Value(0)).current;
+  const textSlide = useRef(new Animated.Value(30)).current;
   const progress = useRef(new Animated.Value(0)).current;
+  const backgroundOpacity = useRef(new Animated.Value(0)).current;
   const [percent, setPercent] = useState(0);
 
   const handleFinish = async () => {
@@ -18,130 +24,223 @@ export default function RocketSplash({ onFinish }: { onFinish: () => void }) {
   };
 
   useEffect(() => {
-    // Ensure fresh values on mount (helps with Expo Go reloads)
-    squareFade.setValue(0);
-    squareRotate.setValue(0);
+    // Reset all animations for fresh start
+    logoScale.setValue(0.5);
+    logoOpacity.setValue(0);
     textFade.setValue(0);
+    textSlide.setValue(30);
     progress.setValue(0);
+    backgroundOpacity.setValue(0);
 
-    // Step 1: Square fades in and rotates
+    // Modern entrance animation sequence
     Animated.sequence([
+      // Background fade in
+      Animated.timing(backgroundOpacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      // Logo entrance with spring effect
       Animated.parallel([
-        Animated.timing(squareFade, {
+        Animated.spring(logoScale, {
+          toValue: 1,
+          friction: 4,
+          tension: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(logoOpacity, {
           toValue: 1,
           duration: 800,
           useNativeDriver: true,
         }),
-        Animated.timing(squareRotate, {
+      ]),
+      // Text slides up and fades in
+      Animated.parallel([
+        Animated.timing(textFade, {
           toValue: 1,
-          duration: 1500,
-          easing: Easing.inOut(Easing.ease),
+          duration: 600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(textSlide, {
+          toValue: 0,
+          duration: 600,
+          easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
       ]),
-      // Step 2: After rotation, fade in text
-      Animated.timing(textFade, {
-        toValue: 1,
-        duration: 800,
-        useNativeDriver: true,
-      }),
     ]).start();
 
-    // Progress bar: 0 -> 100% over 4s
+    // Progress animation over 4 seconds
     const progressAnim = Animated.timing(progress, {
       toValue: 1,
       duration: 4000,
-      useNativeDriver: false, // width animation can't use native driver
+      easing: Easing.out(Easing.quad),
+      useNativeDriver: false,
     });
     progressAnim.start();
 
-    const subId = progress.addListener(({ value }) => {
-      setPercent(Math.min(100, Math.round(value * 100)));
+    // Update percentage display
+    const progressListener = progress.addListener(({ value }) => {
+      setPercent(Math.round(value * 100));
     });
 
-    const timeout = setTimeout(handleFinish, 4000);
+    // Auto finish after 4 seconds
+    const finishTimer = setTimeout(handleFinish, 4000);
+
     return () => {
-      clearTimeout(timeout);
-      progress.removeListener(subId);
+      progress.removeListener(progressListener);
+      clearTimeout(finishTimer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const rotation = squareRotate.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
-
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Animated.View
         style={[
-          styles.square,
+          styles.backgroundOverlay,
           {
-            opacity: squareFade,
-            transform: [{ rotate: rotation }],
+            opacity: backgroundOpacity,
+            backgroundColor: colors.surface,
           },
         ]}
-      >
-        <Animated.Text style={[styles.title, { opacity: textFade }]}>
-          Sticker Smash
-        </Animated.Text>
-      </Animated.View>
-      <View style={styles.progressTrack}>
+      />
+
+      <View style={styles.content}>
         <Animated.View
           style={[
-            styles.progressFill,
+            styles.logoContainer,
             {
-              width: progress.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 250],
-              }),
+              opacity: logoOpacity,
+              transform: [{ scale: logoScale }],
             },
           ]}
-        />
+        >
+          <View
+            style={[
+              styles.logo,
+              {
+                backgroundColor: colors.glassBackground,
+                borderColor: colors.glassBorder,
+              },
+            ]}
+          >
+            <Text style={styles.logoIcon}>📸</Text>
+          </View>
+        </Animated.View>
+
+        <Animated.View
+          style={[
+            styles.textContainer,
+            {
+              opacity: textFade,
+              transform: [{ translateY: textSlide }],
+            },
+          ]}
+        >
+          <Text style={[styles.title, { color: colors.text }]}>
+            StickerSmash
+          </Text>
+          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+            Create amazing photo memories
+          </Text>
+        </Animated.View>
+
+        <View style={styles.progressContainer}>
+          <View
+            style={[
+              styles.progressTrack,
+              {
+                backgroundColor: colors.surfaceVariant,
+              },
+            ]}
+          >
+            <Animated.View
+              style={[
+                styles.progressBar,
+                {
+                  backgroundColor: colors.primary,
+                  width: progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ["0%", "100%"],
+                  }),
+                },
+              ]}
+            />
+          </View>
+          <Text style={[styles.progressText, { color: colors.textTertiary }]}>
+            {percent}%
+          </Text>
+        </View>
       </View>
-      <Text style={styles.progressText}>{percent}%</Text>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#272727",
     alignItems: "center",
     justifyContent: "center",
   },
-  square: {
-    width: 250,
-    height: 250,
-    backgroundColor: "#0edee2ff",
-    borderRadius: 20,
+  backgroundOverlay: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  content: {
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
+    paddingHorizontal: 40,
+  },
+  logoContainer: {
+    marginBottom: 40,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+  },
+  logoIcon: {
+    fontSize: 48,
+  },
+  textContainer: {
+    alignItems: "center",
+    marginBottom: 60,
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
-    color: "#000000",
+    fontWeight: "700",
+    marginBottom: 8,
     letterSpacing: 1,
+  },
+  subtitle: {
+    fontSize: 16,
     textAlign: "center",
+    lineHeight: 24,
+    fontWeight: "400",
+    letterSpacing: 0.5,
+  },
+  progressContainer: {
+    width: "100%",
+    alignItems: "center",
+    gap: 16,
   },
   progressTrack: {
-    width: 250,
-    height: 10,
-    backgroundColor: "#3a3a3a",
-    borderRadius: 5,
-    marginTop: 150,
+    width: "80%",
+    height: 4,
+    borderRadius: 2,
     overflow: "hidden",
   },
-  progressFill: {
+  progressBar: {
     height: "100%",
-    backgroundColor: "#d4ba0dff",
+    borderRadius: 2,
   },
   progressText: {
-    marginTop: 8,
-    color: "#ffffff",
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: "500",
+    letterSpacing: 1,
   },
 });

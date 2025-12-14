@@ -3,9 +3,11 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import RocketSplash from "../components/RocketSplash";
+import { ThemeProvider, useTheme } from "../context/ThemeContext";
 
-export default function RootLayout() {
+function AppContent() {
   const [loaded, setLoaded] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -14,7 +16,7 @@ export default function RootLayout() {
   if (!loaded) {
     return (
       <>
-        <StatusBar style="light" />
+        <StatusBar style={theme.mode === "dark" ? "light" : "dark"} />
         <RocketSplash onFinish={() => setLoaded(true)} />
       </>
     );
@@ -23,7 +25,7 @@ export default function RootLayout() {
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="light" />
+        <StatusBar style={theme.mode === "dark" ? "light" : "dark"} />
         <Stack>
           <Stack.Screen
             name="(tabs)"
@@ -41,5 +43,13 @@ export default function RootLayout() {
         </Stack>
       </GestureHandlerRootView>
     </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }

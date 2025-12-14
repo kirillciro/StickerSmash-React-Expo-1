@@ -1,5 +1,7 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import * as Haptics from "expo-haptics";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { useTheme } from "../context/ThemeContext";
 
 type props = {
   label: string;
@@ -8,63 +10,81 @@ type props = {
 };
 
 export default function Button({ label, theme, onPress }: props) {
+  const { theme: appTheme } = useTheme();
+  const { colors } = appTheme;
+
+  const handlePress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onPress?.();
+  };
+
   if (theme === "primary") {
     return (
-      <View
-        style={[
+      <Pressable
+        style={({ pressed }) => [
           styles.buttonContainer,
-          { borderWidth: 4, borderColor: "#ffd33d", borderRadius: 18 },
+          {
+            backgroundColor: colors.primary,
+            shadowColor: colors.shadowColor,
+            transform: [{ scale: pressed ? 0.96 : 1 }],
+          },
         ]}
+        onPress={handlePress}
       >
-        <Pressable
-          style={[styles.button, { backgroundColor: "#fff" }]}
-          onPress={onPress}
-        >
-          <FontAwesome
-            name="picture-o"
-            size={24}
-            color="#272727"
-            style={styles.buttonIcon}
-          />
-          <Text style={[styles.buttonLabel, { color: "#272727" }]}>
-            {label}
-          </Text>
-        </Pressable>
-      </View>
+        <FontAwesome
+          name="picture-o"
+          size={22}
+          color={colors.background}
+          style={styles.buttonIcon}
+        />
+        <Text style={[styles.buttonLabel, { color: colors.background }]}>
+          {label}
+        </Text>
+      </Pressable>
     );
   }
 
   return (
-    <View style={styles.buttonContainer}>
-      <Pressable style={styles.button} onPress={onPress}>
-        <Text style={styles.buttonLabel}>{label}</Text>
-      </Pressable>
-    </View>
+    <Pressable
+      style={({ pressed }) => [
+        styles.buttonContainer,
+        {
+          backgroundColor: colors.glassBackground,
+          borderColor: colors.glassBorder,
+          transform: [{ scale: pressed ? 0.96 : 1 }],
+        },
+      ]}
+      onPress={handlePress}
+    >
+      <Text style={[styles.buttonLabel, { color: colors.text }]}>{label}</Text>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: 320,
-    height: 68,
-    marginHorizontal: 20,
+    width: 280,
+    height: 56,
     alignItems: "center",
     justifyContent: "center",
-    padding: 3,
-  },
-  button: {
-    borderRadius: 10,
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    borderRadius: 28,
     flexDirection: "row",
+    gap: 12,
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 24,
+    elevation: 12,
+    borderWidth: 1,
   },
   buttonIcon: {
-    paddingRight: 8,
+    marginRight: 8,
   },
   buttonLabel: {
-    color: "#ffffffff",
-    fontSize: 18,
+    fontSize: 16,
+    fontWeight: "600",
+    letterSpacing: 0.5,
   },
 });

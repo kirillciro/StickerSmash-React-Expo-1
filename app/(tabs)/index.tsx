@@ -10,14 +10,21 @@ import Button from "@/components/Button";
 import CircleButton from "@/components/CircleButton";
 import EmojiList from "@/components/EmojiList";
 import EmojiPicker from "@/components/EmojiPicker";
+import FilterButton from "@/components/FilterButton";
 import IconButton from "@/components/IconButton";
 import ImageViewer from "@/components/ImageViewer";
+import ThemeToggleButton from "@/components/ThemeToggleButton";
+import UndoRedoButtons from "@/components/UndoRedoButtons";
 
 import EmojiSticker from "@/components/EmojiSticker";
+import { useTheme } from "@/context/ThemeContext";
 
 const PlaceholderImage = require("@/assets/images/background-image.png");
 
 export default function Index() {
+  const { theme } = useTheme();
+  const { colors } = theme;
+
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
     undefined
   );
@@ -26,8 +33,63 @@ export default function Index() {
   const [pickedEmoji, setPickedEmoji] = useState<
     ImageSourcePropType | undefined
   >(undefined);
+  const [currentFilter, setCurrentFilter] = useState<string>("none");
+  const [history, setHistory] = useState<
+    Array<{
+      image: string | undefined;
+      emoji: ImageSourcePropType | undefined;
+      filter: string;
+    }>
+  >([]);
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const imageRef = useRef<View>(null);
+
+  const saveToHistory = () => {
+    const newState = {
+      image: selectedImage,
+      emoji: pickedEmoji,
+      filter: currentFilter,
+    };
+    const newHistory = history.slice(0, historyIndex + 1);
+    newHistory.push(newState);
+    setHistory(newHistory);
+    setHistoryIndex(newHistory.length - 1);
+  };
+
+  const handleUndo = () => {
+    if (historyIndex > 0) {
+      const previousState = history[historyIndex - 1];
+      setSelectedImage(previousState.image);
+      setPickedEmoji(previousState.emoji);
+      setCurrentFilter(previousState.filter);
+      setHistoryIndex(historyIndex - 1);
+    }
+  };
+
+  const handleRedo = () => {
+    if (historyIndex < history.length - 1) {
+      const nextState = history[historyIndex + 1];
+      setSelectedImage(nextState.image);
+      setPickedEmoji(nextState.emoji);
+      setCurrentFilter(nextState.filter);
+      setHistoryIndex(historyIndex + 1);
+    }
+  };
+
+  const handleFilterApply = (filter: string) => {
+    setCurrentFilter(filter);
+    // Save to history with the new filter value
+    const newState = {
+      image: selectedImage,
+      emoji: pickedEmoji,
+      filter: filter, // Use the new filter value directly
+    };
+    const newHistory = history.slice(0, historyIndex + 1);
+    newHistory.push(newState);
+    setHistory(newHistory);
+    setHistoryIndex(newHistory.length - 1);
+  };
 
   useEffect(() => {
     if (!permissionResponse?.granted) {
@@ -45,6 +107,7 @@ export default function Index() {
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
       setShowAppOptions(true);
+      saveToHistory();
     } else {
       alert("You did not select any image.");
     }
@@ -52,6 +115,11 @@ export default function Index() {
 
   const onReset = () => {
     setShowAppOptions(false);
+    setSelectedImage(undefined);
+    setPickedEmoji(undefined);
+    setCurrentFilter("none");
+    setHistory([]);
+    setHistoryIndex(-1);
   };
 
   const onAddSticker = () => {
@@ -107,18 +175,47 @@ export default function Index() {
   };
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <GestureHandlerRootView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
+      <View style={styles.headerControls}>
+        <UndoRedoButtons
+          canUndo={historyIndex > 0}
+          canRedo={historyIndex < history.length - 1}
+          onUndo={handleUndo}
+          onRedo={handleRedo}
+        />
+        <ThemeToggleButton />
+      </View>
+
       <View style={styles.imageContainer}>
         <View ref={imageRef} collapsable={false}>
-          <ImageViewer imgSource={selectedImage || PlaceholderImage} />
+          <ImageViewer
+            imgSource={PlaceholderImage}
+            selectedImage={selectedImage}
+            currentFilter={currentFilter}
+          />
           {pickedEmoji && (
             <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
           )}
         </View>
       </View>
+
       {showAppOptions ? (
-        <View style={styles.optionsContainer}>
-          <View style={styles.optionsRow}>
+        <View style={styles.optionsSection}>
+          <FilterButton
+            onApplyFilter={handleFilterApply}
+            currentFilter={currentFilter}
+          />
+          <View
+            style={[
+              styles.optionsRow,
+              {
+                backgroundColor: colors.glassBackground,
+                borderColor: colors.glassBorder,
+              },
+            ]}
+          >
             <IconButton icon="refresh" label="Reset" onPress={onReset} />
             <CircleButton onPress={onAddSticker} />
             <IconButton
@@ -129,7 +226,7 @@ export default function Index() {
           </View>
         </View>
       ) : (
-        <View style={styles.footerContainer}>
+        <View style={styles.footerSection}>
           <Button
             theme="primary"
             label="Choose a photo"
@@ -142,7 +239,13 @@ export default function Index() {
         </View>
       )}
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
+        <EmojiList
+          onSelect={(emoji) => {
+            setPickedEmoji(emoji);
+            saveToHistory();
+          }}
+          onCloseModal={onModalClose}
+        />
       </EmojiPicker>
     </GestureHandlerRootView>
   );
@@ -151,22 +254,41 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#25292e",
+  },
+  headerControls: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    paddingHorizontal: 24,
+    paddingTop: 60,
+    paddingBottom: 20,
   },
   imageContainer: {
     flex: 1,
-  },
-  footerContainer: {
-    flex: 1 / 3,
+    paddingHorizontal: 24,
+    justifyContent: "center",
     alignItems: "center",
+    marginBottom: 20,
   },
-  optionsContainer: {
-    position: "absolute",
-    bottom: 80,
+  optionsSection: {
+    paddingHorizontal: 24,
+    paddingBottom: 20,
+    alignItems: "center",
+    gap: 16,
+  },
+  footerSection: {
+    paddingHorizontal: 24,
+    paddingBottom: 40,
+    alignItems: "center",
+    gap: 16,
   },
   optionsRow: {
     alignItems: "center",
     flexDirection: "row",
+    borderRadius: 32,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    gap: 24,
+    borderWidth: 1,
   },
 });
