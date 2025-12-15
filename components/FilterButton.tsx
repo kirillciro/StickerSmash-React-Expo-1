@@ -38,6 +38,22 @@ export default function FilterButton({
 
   return (
     <View style={styles.container}>
+      <Pressable
+        style={({ pressed }) => [
+          styles.toggleButton,
+          {
+            backgroundColor: colors.glassBackground,
+            borderColor: colors.glassBorder,
+            shadowColor: colors.shadowColor,
+            transform: [{ scale: pressed ? 0.94 : 1 }],
+          },
+        ]}
+        onPress={toggleFilters}
+      >
+        <MaterialIcons name="tune" size={20} color={colors.primary} />
+        <Text style={[styles.toggleText, { color: colors.text }]}>Filters</Text>
+      </Pressable>
+
       {showFilters && (
         <View
           style={[
@@ -92,22 +108,6 @@ export default function FilterButton({
           ))}
         </View>
       )}
-
-      <Pressable
-        style={({ pressed }) => [
-          styles.toggleButton,
-          {
-            backgroundColor: colors.glassBackground,
-            borderColor: colors.glassBorder,
-            shadowColor: colors.shadowColor,
-            transform: [{ scale: pressed ? 0.94 : 1 }],
-          },
-        ]}
-        onPress={toggleFilters}
-      >
-        <MaterialIcons name="tune" size={20} color={colors.primary} />
-        <Text style={[styles.toggleText, { color: colors.text }]}>Filters</Text>
-      </Pressable>
     </View>
   );
 }
@@ -115,18 +115,21 @@ export default function FilterButton({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    position: "relative",
   },
   filtersContainer: {
+    position: "absolute",
+    bottom: 60,
     minWidth: 120,
     borderRadius: 16,
     borderWidth: 1,
     paddingVertical: 8,
-    marginBottom: 16,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
     elevation: 6,
     overflow: "hidden",
+    zIndex: 1000,
   },
   filterItem: {
     flexDirection: "row",

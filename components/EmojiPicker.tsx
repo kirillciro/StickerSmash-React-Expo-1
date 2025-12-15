@@ -1,7 +1,7 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import * as Haptics from "expo-haptics";
 import { PropsWithChildren } from "react";
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 
 type Props = PropsWithChildren<{
@@ -18,52 +18,55 @@ export default function EmojiPicker({ isVisible, children, onClose }: Props) {
     onClose();
   };
 
+  if (!isVisible) return null;
+
   return (
-    <View>
-      <Modal animationType="slide" transparent={true} visible={isVisible}>
-        <View style={styles.modalOverlay}>
-          <View
-            style={[
-              styles.modalContent,
+    <View style={styles.modalOverlay}>
+      <View
+        style={[
+          styles.modalContent,
+          {
+            backgroundColor: colors.surface,
+            borderColor: colors.glassBorder,
+          },
+        ]}
+      >
+        <View
+          style={[styles.handle, { backgroundColor: colors.textTertiary }]}
+        />
+        <View style={styles.titleContainer}>
+          <Text style={[styles.title, { color: colors.text }]}>
+            Choose a sticker
+          </Text>
+          <Pressable
+            style={({ pressed }) => [
+              styles.closeButton,
               {
-                backgroundColor: colors.surface,
-                borderColor: colors.glassBorder,
+                backgroundColor: colors.glassBackground,
+                transform: [{ scale: pressed ? 0.9 : 1 }],
               },
             ]}
+            onPress={handleClose}
           >
-            <View
-              style={[styles.handle, { backgroundColor: colors.textTertiary }]}
-            />
-            <View style={styles.titleContainer}>
-              <Text style={[styles.title, { color: colors.text }]}>
-                Choose a sticker
-              </Text>
-              <Pressable
-                style={({ pressed }) => [
-                  styles.closeButton,
-                  {
-                    backgroundColor: colors.glassBackground,
-                    transform: [{ scale: pressed ? 0.9 : 1 }],
-                  },
-                ]}
-                onPress={handleClose}
-              >
-                <MaterialIcons name="close" color={colors.primary} size={20} />
-              </Pressable>
-            </View>
-            {children}
-          </View>
+            <MaterialIcons name="close" color={colors.primary} size={20} />
+          </Pressable>
         </View>
-      </Modal>
+        {children}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   modalOverlay: {
-    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "flex-end",
+    zIndex: 1000,
   },
   modalContent: {
     height: "40%",

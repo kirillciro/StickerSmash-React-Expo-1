@@ -2,11 +2,19 @@ import domtoimage from "dom-to-image";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useRef, useState } from "react";
-import { ImageSourcePropType, Platform, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  ImageSourcePropType,
+  Platform,
+  StyleSheet,
+  View,
+} from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { captureRef } from "react-native-view-shot";
 
 import Button from "@/components/Button";
+import CameraButton from "@/components/CameraButton";
 import CircleButton from "@/components/CircleButton";
 import EmojiList from "@/components/EmojiList";
 import EmojiPicker from "@/components/EmojiPicker";
@@ -24,6 +32,8 @@ const PlaceholderImage = require("@/assets/images/background-image.png");
 export default function Index() {
   const { theme } = useTheme();
   const { colors } = theme;
+  const { height: screenHeight } = Dimensions.get("window");
+  const isLargeIPhone = Platform.OS === "ios" && screenHeight > 800;
 
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
     undefined
@@ -35,14 +45,16 @@ export default function Index() {
   >(undefined);
   const [currentFilter, setCurrentFilter] = useState<string>("none");
   const [history, setHistory] = useState<
-    Array<{
+    {
       image: string | undefined;
       emoji: ImageSourcePropType | undefined;
       filter: string;
-    }>
+    }[]
   >([]);
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
+  const [cameraPermission, requestCameraPermission] =
+    ImagePicker.useCameraPermissions();
   const imageRef = useRef<View>(null);
 
   const saveToHistory = () => {
@@ -95,7 +107,15 @@ export default function Index() {
     if (!permissionResponse?.granted) {
       requestPermission();
     }
-  }, [permissionResponse?.granted, requestPermission]);
+    if (!cameraPermission?.granted) {
+      requestCameraPermission();
+    }
+  }, [
+    permissionResponse?.granted,
+    requestPermission,
+    cameraPermission?.granted,
+    requestCameraPermission,
+  ]);
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -110,6 +130,27 @@ export default function Index() {
       saveToHistory();
     } else {
       alert("You did not select any image.");
+    }
+  };
+
+  const takePictureAsync = async () => {
+    if (!cameraPermission?.granted) {
+      const permission = await requestCameraPermission();
+      if (!permission.granted) {
+        alert("Camera permission is required to take photos.");
+        return;
+      }
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      setShowAppOptions(true);
+      saveToHistory();
     }
   };
 
@@ -175,120 +216,156 @@ export default function Index() {
   };
 
   return (
-    <GestureHandlerRootView
-      style={[styles.container, { backgroundColor: colors.background }]}
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: colors.background }}
+      edges={["top", "left", "right"]}
     >
-      <View style={styles.headerControls}>
-        <UndoRedoButtons
-          canUndo={historyIndex > 0}
-          canRedo={historyIndex < history.length - 1}
-          onUndo={handleUndo}
-          onRedo={handleRedo}
-        />
-        <ThemeToggleButton />
-      </View>
-
-      <View style={styles.imageContainer}>
-        <View ref={imageRef} collapsable={false}>
-          <ImageViewer
-            imgSource={PlaceholderImage}
-            selectedImage={selectedImage}
-            currentFilter={currentFilter}
+      <GestureHandlerRootView
+        style={[styles.container, { backgroundColor: colors.background }]}
+      >
+        <View
+          style={[
+            styles.headerControls,
+            isLargeIPhone && styles.headerControlsLarge,
+          ]}
+        >
+          <UndoRedoButtons
+            canUndo={historyIndex > 0}
+            canRedo={historyIndex < history.length - 1}
+            onUndo={handleUndo}
+            onRedo={handleRedo}
           />
-          {pickedEmoji && (
-            <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
-          )}
+          <ThemeToggleButton />
         </View>
-      </View>
 
-      {showAppOptions ? (
-        <View style={styles.optionsSection}>
-          <FilterButton
-            onApplyFilter={handleFilterApply}
-            currentFilter={currentFilter}
-          />
-          <View
-            style={[
-              styles.optionsRow,
-              {
-                backgroundColor: colors.glassBackground,
-                borderColor: colors.glassBorder,
-              },
-            ]}
-          >
-            <IconButton icon="refresh" label="Reset" onPress={onReset} />
-            <CircleButton onPress={onAddSticker} />
-            <IconButton
-              icon="save-alt"
-              label="Save"
-              onPress={onSaveImageAsync}
+        <View style={styles.imageContainer}>
+          <View ref={imageRef} collapsable={false}>
+            <ImageViewer
+              imgSource={PlaceholderImage}
+              selectedImage={selectedImage}
+              currentFilter={currentFilter}
             />
+            {pickedEmoji && (
+              <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
+            )}
           </View>
         </View>
-      ) : (
-        <View style={styles.footerSection}>
-          <Button
-            theme="primary"
-            label="Choose a photo"
-            onPress={pickImageAsync}
-          />
-          <Button
-            label="Use this photo"
-            onPress={() => setShowAppOptions(true)}
-          />
-        </View>
-      )}
-      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-        <EmojiList
-          onSelect={(emoji) => {
-            setPickedEmoji(emoji);
-            saveToHistory();
-          }}
-          onCloseModal={onModalClose}
-        />
-      </EmojiPicker>
-    </GestureHandlerRootView>
+
+        {showAppOptions ? (
+          <View
+            style={[
+              styles.footerSection,
+              isLargeIPhone && styles.footerSectionLarge,
+            ]}
+          >
+            <View style={styles.buttonRow}>
+              <FilterButton
+                onApplyFilter={handleFilterApply}
+                currentFilter={currentFilter}
+              />
+            </View>
+            <View style={styles.buttonRow}>
+              <IconButton icon="refresh" label="Reset" onPress={onReset} />
+              <CircleButton onPress={onAddSticker} />
+              <IconButton
+                icon="save-alt"
+                label="Save"
+                onPress={onSaveImageAsync}
+              />
+            </View>
+          </View>
+        ) : (
+          <View
+            style={[
+              styles.footerSection,
+              isLargeIPhone && styles.footerSectionLarge,
+            ]}
+          >
+            <View style={styles.buttonRow}>
+              <Button
+                theme="primary"
+                label="Choose Photo"
+                onPress={pickImageAsync}
+              />
+              <CameraButton onPress={takePictureAsync} />
+            </View>
+            <Button
+              label="Use this photo"
+              onPress={() => setShowAppOptions(true)}
+            />
+          </View>
+        )}
+        {isModalVisible && (
+          <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+            <EmojiList
+              onSelect={(emoji) => {
+                setPickedEmoji(emoji);
+                saveToHistory();
+              }}
+              onCloseModal={onModalClose}
+            />
+          </EmojiPicker>
+        )}
+      </GestureHandlerRootView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
   },
   headerControls: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 24,
-    paddingTop: 60,
-    paddingBottom: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    zIndex: 100,
+  },
+  headerControlsLarge: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
   imageContainer: {
-    flex: 1,
-    paddingHorizontal: 24,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
-  },
-  optionsSection: {
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-    alignItems: "center",
-    gap: 16,
+    paddingHorizontal: 16,
+    paddingTop: 60,
+    paddingBottom: 180,
   },
   footerSection: {
-    paddingHorizontal: 24,
-    paddingBottom: 40,
-    alignItems: "center",
-    gap: 16,
-  },
-  optionsRow: {
-    alignItems: "center",
-    flexDirection: "row",
-    borderRadius: 32,
+    position: "absolute",
+    bottom: Platform.OS === "ios" ? 120 : 100,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 12,
     paddingVertical: 12,
-    paddingHorizontal: 20,
-    gap: 24,
-    borderWidth: 1,
+    alignItems: "center",
+    gap: 10,
+    zIndex: 100,
+  },
+  footerSectionLarge: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    paddingBottom: 34,
+    gap: 12,
+  },
+  buttonRow: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
 });

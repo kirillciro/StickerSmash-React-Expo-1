@@ -8,40 +8,54 @@ export default function AboutScreen() {
 
   const features = [
     {
-      icon: "photo",
-      title: "Image Selection",
-      description: "Choose photos from your gallery or use the default image",
+      icon: "photo-library",
+      title: "Photo Library",
+      description: "Import photos instantly",
+    },
+    {
+      icon: "camera-alt",
+      title: "Camera",
+      description: "Take photos directly",
     },
     {
       icon: "emoji-emotions",
-      title: "Emoji Stickers",
-      description: "Add fun emoji stickers to your photos with touch gestures",
+      title: "Stickers",
+      description: "Add emoji anywhere",
+    },
+    {
+      icon: "tune",
+      title: "Filters",
+      description: "Apply visual effects",
+    },
+    {
+      icon: "history",
+      title: "History",
+      description: "Undo and redo edits",
     },
     {
       icon: "palette",
-      title: "Image Filters",
-      description: "Apply sepia, blur, grayscale, and invert filters",
-    },
-    {
-      icon: "undo",
-      title: "Undo/Redo",
-      description: "Full history management with undo and redo functionality",
-    },
-    {
-      icon: "dark-mode",
-      title: "Theme Switcher",
-      description: "Toggle between warm light and cozy dark themes",
+      title: "Themes",
+      description: "Light and dark modes",
     },
     {
       icon: "vibration",
-      title: "Haptic Feedback",
-      description: "Tactile feedback for all interactions and gestures",
+      title: "Haptics",
+      description: "Feel every tap",
     },
     {
-      icon: "save",
-      title: "Save to Gallery",
-      description:
-        "Save your creations directly to your device's photo library",
+      icon: "save-alt",
+      title: "Save",
+      description: "Export your creations",
+    },
+    {
+      icon: "smartphone",
+      title: "iOS Ready",
+      description: "Built for modern iOS and Android OS",
+    },
+    {
+      icon: "touch-app",
+      title: "Gestures",
+      description: "Drag, pinch, and tap",
     },
   ];
 
@@ -56,10 +70,10 @@ export default function AboutScreen() {
             StickerSmash
           </Text>
           <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-            Create amazing photo memories with stickers and filters
+            Edit photos with stickers and filters
           </Text>
           <Text style={[styles.version, { color: colors.textTertiary }]}>
-            Version 2.0 • 2025 Edition
+            Version 3.0 • Enhanced Edition • December 2025
           </Text>
         </View>
 
@@ -113,7 +127,7 @@ export default function AboutScreen() {
             Built with React Native & Expo
           </Text>
           <Text style={[styles.footerText, { color: colors.textTertiary }]}>
-            Warm color palettes for a friendly experience
+            Works on iOS 17+ and all platforms
           </Text>
         </View>
       </ScrollView>
@@ -194,6 +208,7 @@ const styles = StyleSheet.create({
   footer: {
     alignItems: "center",
     paddingTop: 20,
+    paddingBottom: 120,
     borderTopWidth: 1,
     borderTopColor: "rgba(255, 255, 255, 0.1)",
   },
