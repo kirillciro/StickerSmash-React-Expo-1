@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
   },
   footerSection: {
     position: "absolute",
-    bottom: Platform.OS === "ios" ? 120 : 100,
+    bottom: Platform.OS === "ios" ? 160 : 130,
     left: 0,
     right: 0,
     paddingHorizontal: 12,

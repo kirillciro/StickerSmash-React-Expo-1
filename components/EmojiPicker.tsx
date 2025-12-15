@@ -1,7 +1,14 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import * as Haptics from "expo-haptics";
-import { PropsWithChildren } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { PropsWithChildren, useEffect, useRef } from "react";
+import {
+  Animated,
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useTheme } from "../context/ThemeContext";
 
 type Props = PropsWithChildren<{
@@ -12,6 +19,39 @@ type Props = PropsWithChildren<{
 export default function EmojiPicker({ isVisible, children, onClose }: Props) {
   const { theme } = useTheme();
   const { colors } = theme;
+  const { height: screenHeight } = Dimensions.get("window");
+  const slideAnim = useRef(new Animated.Value(screenHeight)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (isVisible) {
+      Animated.parallel([
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacityAnim, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(slideAnim, {
+          toValue: screenHeight,
+          duration: 250,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacityAnim, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }
+  }, [isVisible, slideAnim, opacityAnim, screenHeight]);
 
   const handleClose = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -21,13 +61,14 @@ export default function EmojiPicker({ isVisible, children, onClose }: Props) {
   if (!isVisible) return null;
 
   return (
-    <View style={styles.modalOverlay}>
-      <View
+    <Animated.View style={[styles.modalOverlay, { opacity: opacityAnim }]}>
+      <Animated.View
         style={[
           styles.modalContent,
           {
             backgroundColor: colors.surface,
             borderColor: colors.glassBorder,
+            transform: [{ translateY: slideAnim }],
           },
         ]}
       >
@@ -51,9 +92,9 @@ export default function EmojiPicker({ isVisible, children, onClose }: Props) {
             <MaterialIcons name="close" color={colors.primary} size={20} />
           </Pressable>
         </View>
-        {children}
-      </View>
-    </View>
+        <View style={styles.emojiContainer}>{children}</View>
+      </Animated.View>
+    </Animated.View>
   );
 }
 
@@ -66,7 +107,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "flex-end",
-    zIndex: 1000,
+    zIndex: 10000,
   },
   modalContent: {
     height: "40%",
@@ -77,16 +118,21 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderRightWidth: 1,
   },
+  emojiContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingBottom: 100,
+  },
   handle: {
     width: 40,
-    height: 4,
+    height: 3,
     borderRadius: 2,
     alignSelf: "center",
     marginTop: 12,
     marginBottom: 20,
   },
   titleContainer: {
-    height: 60,
+    height: 30,
     paddingHorizontal: 24,
     flexDirection: "row",
     alignItems: "center",
