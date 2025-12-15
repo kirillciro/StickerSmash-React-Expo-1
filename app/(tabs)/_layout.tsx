@@ -54,8 +54,6 @@ export default function RootLayout() {
         tabBarStyle: {
           position: "absolute",
           backgroundColor: colors.glassBackground,
-          borderTopWidth: 1,
-          borderTopColor: colors.glassBorder,
           height: Platform.OS === "ios" ? 88 : 70,
           paddingTop: 8,
           paddingBottom: Platform.OS === "ios" ? 28 : 12,
@@ -63,6 +61,8 @@ export default function RootLayout() {
           marginHorizontal: 16,
           marginBottom: Platform.OS === "ios" ? 34 : 16,
           borderRadius: 24,
+          borderWidth: 0,
+          borderTopWidth: 0,
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.1,
           shadowRadius: 12,

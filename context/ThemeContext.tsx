@@ -47,16 +47,16 @@ const lightColors: ThemeColors = {
 
   // Glass effects with warm tones
   glassBackground: "rgba(255, 248, 235, 0.8)",
-  glassBorder: "rgba(209, 157, 89, 0.2)",
+  glassBorder: "rgba(0, 0, 0, 0.41)",
 
-  // Rich text colors
-  text: "#2d2926",
-  textSecondary: "#5c5650",
-  textTertiary: "#8a8278",
+  // Black text colors for light theme
+  text: "#000000",
+  textSecondary: "#333333",
+  textTertiary: "#4e4e4eff",
 
   // Warm, inviting interactive colors
-  primary: "#d19d59", // Warm golden
-  primaryVariant: "#e6b470",
+  primary: "#8f5f20ff", // Warm golden
+  primaryVariant: "#a27638ff",
   secondary: "#8fbc8f", // Sage green
   accent: "#ff8a80", // Coral
 
@@ -75,8 +75,8 @@ const darkColors: ThemeColors = {
   surfaceVariant: "#332e28",
 
   // Glass effects with warm undertones
-  glassBackground: "rgba(42, 36, 32, 0.8)",
-  glassBorder: "rgba(209, 157, 89, 0.3)",
+  glassBackground: "rgba(42, 36, 32, 0.69)",
+  glassBorder: "rgba(0, 0, 0, 0)",
 
   // Warm text colors
   text: "#f5f1eb",

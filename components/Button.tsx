@@ -63,9 +63,9 @@ export default function Button({ label, theme, onPress }: props) {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   buttonContainer: {
-    width: Math.min(140, (Dimensions.get("window").width - 32) / 2),
+    width: Math.min(180, (Dimensions.get("window").width - 32) / 2),
     height: 36,
     alignItems: "center",
     justifyContent: "center",
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 6,
     elevation: 6,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
   },
   buttonIcon: {
     marginRight: 8,

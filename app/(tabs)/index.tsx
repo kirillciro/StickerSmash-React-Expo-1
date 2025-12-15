@@ -361,6 +361,9 @@ const styles = StyleSheet.create({
     paddingBottom: 34,
     gap: 12,
   },
+  button: {
+    paddingHorizontal: 20,
+  },
   buttonRow: {
     flexDirection: "row",
     gap: 8,
