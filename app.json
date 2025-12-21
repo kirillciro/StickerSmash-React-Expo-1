@@ -4,48 +4,69 @@
     "slug": "StickerSmash",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icons/icon-light.png",
     "scheme": "stickersmash",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/splash-icon.png",
+      "image": "./assets/icons/splash-icon-light.png",
       "resizeMode": "contain",
-      "backgroundColor": "#25292e"
+      "backgroundColor": "#000000",
+      "dark": {
+        "image": "./assets/icons/splash-icon-dark.png",
+        "backgroundColor": "#000000"
+      }
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/icons/icon-light.png",
+      "bundleIdentifier": "com.kirills.StickerSmash",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/splash-icon-light.png",
         "backgroundColor": "#ffffff"
       },
+      "icon": "./assets/icons/icon-dark.png",
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.kirills.StickerSmash"
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/icons/icon-light.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "backgroundColor": "#000000",
+          "image": "./assets/icons/splash-icon-light.png",
+          "dark": {
+            "image": "./assets/icons/splash-icon-dark.png",
+            "backgroundColor": "#000000"
+          },
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#272727",
-          "dark": {
-            "backgroundColor": "#272727"
-          }
+          "splashScreenDelay": 1500
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "06d44351-5fde-44a4-9aad-869b19c84196"
+      }
     }
   }
 }

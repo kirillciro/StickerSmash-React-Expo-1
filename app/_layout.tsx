@@ -1,26 +1,20 @@
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import RocketSplash from "../components/RocketSplash";
 import { ThemeProvider, useTheme } from "../context/ThemeContext";
 
 function AppContent() {
-  const [loaded, setLoaded] = useState(false);
   const { theme } = useTheme();
 
   useEffect(() => {
-    SplashScreen.preventAutoHideAsync().catch(() => {});
+    // Hide splash screen after app is fully loaded
+    const hideSplash = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // 1.5 seconds
+      await SplashScreen.hideAsync();
+    };
+    hideSplash();
   }, []);
-
-  if (!loaded) {
-    return (
-      <>
-        <StatusBar style={theme.mode === "dark" ? "light" : "dark"} />
-        <RocketSplash onFinish={() => setLoaded(true)} />
-      </>
-    );
-  }
 
   return (
     <>

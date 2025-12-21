@@ -1,0 +1,334 @@
+[2025-12-21T11:26:13.636Z] EAS CLI Debug Session Started - PID: 53513
+[2025-12-21T11:26:13.640Z] Log file: /Users/user/Desktop/MyApps/StickerSmash/eas-debug.log
+[2025-12-21T11:26:13.640Z] Pre-flight GraphQL connectivity test starting...
+[2025-12-21T11:26:13.640Z] GraphQL request attempt #1 START
+[2025-12-21T11:26:13.919Z] GraphQL request attempt #1 END, Status: 200, Duration: 279ms, Body: {"data":{"viewer":{"username":"kirills"}}}
+
+[2025-12-21T11:26:15.690Z] Running: eas-cli whoami
+kirills (authenticated using EXPO_TOKEN)
+[2025-12-21T11:26:22.261Z] EAS CLI exited with code 0
+[2025-12-21T11:27:55.323Z] EAS CLI Debug Session Started - PID: 53840
+[2025-12-21T11:27:55.328Z] Log file: /Users/user/Desktop/MyApps/StickerSmash/eas-debug.log (max size: 10MB)
+[2025-12-21T11:27:55.328Z] Current log size: 1KB
+[2025-12-21T11:27:55.328Z] Pre-flight GraphQL connectivity test starting...
+[2025-12-21T11:27:55.328Z] GraphQL request attempt #1 START
+[2025-12-21T11:27:55.606Z] GraphQL request attempt #1 END, Status: 200, Duration: 278ms, Body: {"data":{"viewer":{"username":"kirills"}}}
+
+[2025-12-21T11:27:57.381Z] Running: eas-cli whoami
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:28:01.681Z] EAS CLI exited with code 1
+[2025-12-21T11:28:01.681Z] Retrying EAS CLI... (3 left)
+[2025-12-21T11:28:01.681Z] Running: eas-cli whoami
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:28:05.957Z] EAS CLI exited with code 1
+[2025-12-21T11:28:05.957Z] Retrying EAS CLI... (2 left)
+[2025-12-21T11:28:05.957Z] Running: eas-cli whoami
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:28:10.680Z] EAS CLI exited with code 1
+[2025-12-21T11:28:10.680Z] Retrying EAS CLI... (1 left)
+[2025-12-21T11:28:10.680Z] Running: eas-cli whoami
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:28:15.297Z] EAS CLI exited with code 1
+[2025-12-21T11:30:12.967Z] EAS CLI Debug Session Started - PID: 54143
+[2025-12-21T11:30:12.972Z] Log file: /Users/user/Desktop/MyApps/StickerSmash/eas-debug.log (max size: 10MB)
+[2025-12-21T11:30:12.972Z] Current log size: 2KB
+[2025-12-21T11:30:12.972Z] Pre-flight GraphQL connectivity test starting...
+[2025-12-21T11:30:12.972Z] GraphQL request attempt #1 START
+[2025-12-21T11:30:13.250Z] GraphQL request attempt #1 END, Status: 200, Duration: 278ms, Body: {"data":{"viewer":{"username":"kirills"}}}
+
+[2025-12-21T11:30:15.020Z] Running: eas-cli whoami
+kirills (authenticated using EXPO_TOKEN)
+[2025-12-21T11:30:20.260Z] EAS CLI exited with code 0
+[2025-12-21T11:30:20.260Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:30:20.260Z] Session duration: 7.3s
+[2025-12-21T11:30:20.260Z] Total requests: 1
+[2025-12-21T11:30:20.260Z] Successful: 1 (100.0%)
+[2025-12-21T11:30:20.260Z] Failed: 0
+[2025-12-21T11:30:20.260Z] Response times - Avg: 278.00ms, Min: 278ms, Max: 278ms
+[2025-12-21T11:30:20.260Z] ===============================
+
+[2025-12-21T11:31:59.219Z] EAS CLI Debug Session Started - PID: 54368
+[2025-12-21T11:31:59.223Z] Log file: /Users/user/Desktop/MyApps/StickerSmash/eas-debug.log (max size: 10MB)
+[2025-12-21T11:31:59.223Z] Current log size: 3KB
+[2025-12-21T11:31:59.223Z] Pre-flight GraphQL connectivity test starting...
+[2025-12-21T11:31:59.223Z] GraphQL request attempt #1 START
+[2025-12-21T11:31:59.540Z] GraphQL request attempt #1 END, Status: 200, Duration: 317ms, Body: {"data":{"viewer":{"username":"kirills"}}}
+
+[2025-12-21T11:32:01.273Z] Running: eas-cli whoami
+kirills (authenticated using EXPO_TOKEN)
+[2025-12-21T11:32:08.396Z] EAS CLI exited with code 0
+[2025-12-21T11:32:08.396Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:32:08.397Z] Session duration: 9.2s
+[2025-12-21T11:32:08.397Z] Total requests: 1
+[2025-12-21T11:32:08.397Z] Successful: 1 (100.0%)
+[2025-12-21T11:32:08.397Z] Failed: 0
+[2025-12-21T11:32:08.397Z] Response times - Avg: 317.00ms, Min: 317ms, Max: 317ms
+[2025-12-21T11:32:08.397Z] 
+--- Load Analysis ---
+[2025-12-21T11:32:08.397Z] Average RPS: 0.11
+[2025-12-21T11:32:08.397Z] Peak RPS: 1
+[2025-12-21T11:32:08.397Z] Peak window: 2025-12-21T11:31:59.000Z → 2025-12-21T11:32:00.000Z
+[2025-12-21T11:32:08.397Z] ===============================
+
+[2025-12-21T11:34:38.713Z] EAS CLI Debug Session Started - PID: 54649
+[2025-12-21T11:34:38.717Z] Log file: /Users/user/Desktop/MyApps/StickerSmash/eas-debug.log (max size: 10MB)
+[2025-12-21T11:34:38.718Z] Current log size: 4KB
+[2025-12-21T11:34:38.718Z] Pre-flight GraphQL connectivity test starting...
+[2025-12-21T11:34:38.718Z] GraphQL request attempt #1 START
+[2025-12-21T11:34:38.988Z] GraphQL request attempt #1 END, Status: 200, Duration: 269ms, Body: {"data":{"viewer":{"username":"kirills"}}}
+
+[2025-12-21T11:34:40.767Z] Running: eas-cli whoami
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:34:44.965Z] EAS CLI exited with code 1
+[2025-12-21T11:34:44.965Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:34:44.965Z] Session duration: 6.3s
+[2025-12-21T11:34:44.966Z] Total requests: 1
+[2025-12-21T11:34:44.966Z] Successful: 1 (100.0%)
+[2025-12-21T11:34:44.966Z] Failed: 0
+[2025-12-21T11:34:44.966Z] Response times - Avg: 269.00ms, Min: 269ms, Max: 269ms
+[2025-12-21T11:34:44.966Z] 
+--- Load Analysis ---
+[2025-12-21T11:34:44.966Z] Average RPS: 0.16
+[2025-12-21T11:34:44.966Z] Peak RPS: 1
+[2025-12-21T11:34:44.966Z] Peak window: 2025-12-21T11:34:38.000Z → 2025-12-21T11:34:39.000Z
+[2025-12-21T11:34:44.966Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:34:44.966Z] No failure windows detected (100% success rate)
+[2025-12-21T11:34:44.966Z] ===============================
+
+[2025-12-21T11:34:44.966Z] Retrying EAS CLI... (3 left)
+[2025-12-21T11:34:44.966Z] Running: eas-cli whoami
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:34:49.159Z] EAS CLI exited with code 1
+[2025-12-21T11:34:49.159Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:34:49.159Z] Session duration: 10.4s
+[2025-12-21T11:34:49.159Z] Total requests: 1
+[2025-12-21T11:34:49.159Z] Successful: 1 (100.0%)
+[2025-12-21T11:34:49.159Z] Failed: 0
+[2025-12-21T11:34:49.159Z] Response times - Avg: 269.00ms, Min: 269ms, Max: 269ms
+[2025-12-21T11:34:49.159Z] 
+--- Load Analysis ---
+[2025-12-21T11:34:49.159Z] Average RPS: 0.10
+[2025-12-21T11:34:49.159Z] Peak RPS: 1
+[2025-12-21T11:34:49.159Z] Peak window: 2025-12-21T11:34:38.000Z → 2025-12-21T11:34:39.000Z
+[2025-12-21T11:34:49.159Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:34:49.159Z] No failure windows detected (100% success rate)
+[2025-12-21T11:34:49.159Z] ===============================
+
+[2025-12-21T11:34:49.159Z] Retrying EAS CLI... (2 left)
+[2025-12-21T11:34:49.159Z] Running: eas-cli whoami
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:34:53.648Z] EAS CLI exited with code 1
+[2025-12-21T11:34:53.648Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:34:53.648Z] Session duration: 14.9s
+[2025-12-21T11:34:53.648Z] Total requests: 1
+[2025-12-21T11:34:53.648Z] Successful: 1 (100.0%)
+[2025-12-21T11:34:53.648Z] Failed: 0
+[2025-12-21T11:34:53.648Z] Response times - Avg: 269.00ms, Min: 269ms, Max: 269ms
+[2025-12-21T11:34:53.648Z] 
+--- Load Analysis ---
+[2025-12-21T11:34:53.648Z] Average RPS: 0.07
+[2025-12-21T11:34:53.648Z] Peak RPS: 1
+[2025-12-21T11:34:53.648Z] Peak window: 2025-12-21T11:34:38.000Z → 2025-12-21T11:34:39.000Z
+[2025-12-21T11:34:53.648Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:34:53.648Z] No failure windows detected (100% success rate)
+[2025-12-21T11:34:53.648Z] ===============================
+
+[2025-12-21T11:34:53.648Z] Retrying EAS CLI... (1 left)
+[2025-12-21T11:34:53.648Z] Running: eas-cli whoami
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:34:57.499Z] EAS CLI exited with code 1
+[2025-12-21T11:35:46.440Z] EAS CLI Debug Session Started - PID: 54919
+[2025-12-21T11:35:46.444Z] Log file: /Users/user/Desktop/MyApps/StickerSmash/eas-debug.log (max size: 10MB)
+[2025-12-21T11:35:46.444Z] Current log size: 8KB
+[2025-12-21T11:35:46.444Z] Pre-flight GraphQL connectivity test starting...
+[2025-12-21T11:35:46.445Z] GraphQL request attempt #1 START
+[2025-12-21T11:35:46.737Z] GraphQL request attempt #1 END, Status: 200, Duration: 292ms, Body: {"data":{"viewer":{"username":"kirills"}}}
+
+[2025-12-21T11:35:48.495Z] Running: eas-cli build -p ios --local
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:35:53.163Z] EAS CLI exited with code 1
+[2025-12-21T11:35:53.163Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:35:53.164Z] Session duration: 6.7s
+[2025-12-21T11:35:53.164Z] Total requests: 1
+[2025-12-21T11:35:53.164Z] Successful: 1 (100.0%)
+[2025-12-21T11:35:53.164Z] Failed: 0
+[2025-12-21T11:35:53.164Z] Response times - Avg: 292.00ms, Min: 292ms, Max: 292ms
+[2025-12-21T11:35:53.164Z] 
+--- Load Analysis ---
+[2025-12-21T11:35:53.164Z] Average RPS: 0.15
+[2025-12-21T11:35:53.164Z] Peak RPS: 1
+[2025-12-21T11:35:53.164Z] Peak window: 2025-12-21T11:35:46.000Z → 2025-12-21T11:35:47.000Z
+[2025-12-21T11:35:53.164Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:35:53.164Z] No failure windows detected (100% success rate)
+[2025-12-21T11:35:53.164Z] ===============================
+
+[2025-12-21T11:35:53.164Z] Retrying EAS CLI... (3 left)
+[2025-12-21T11:35:53.164Z] Running: eas-cli build -p ios --local
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:35:58.468Z] EAS CLI exited with code 1
+[2025-12-21T11:35:58.468Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:35:58.468Z] Session duration: 12.0s
+[2025-12-21T11:35:58.468Z] Total requests: 1
+[2025-12-21T11:35:58.468Z] Successful: 1 (100.0%)
+[2025-12-21T11:35:58.468Z] Failed: 0
+[2025-12-21T11:35:58.468Z] Response times - Avg: 292.00ms, Min: 292ms, Max: 292ms
+[2025-12-21T11:35:58.468Z] 
+--- Load Analysis ---
+[2025-12-21T11:35:58.468Z] Average RPS: 0.08
+[2025-12-21T11:35:58.468Z] Peak RPS: 1
+[2025-12-21T11:35:58.468Z] Peak window: 2025-12-21T11:35:46.000Z → 2025-12-21T11:35:47.000Z
+[2025-12-21T11:35:58.468Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:35:58.468Z] No failure windows detected (100% success rate)
+[2025-12-21T11:35:58.468Z] ===============================
+
+[2025-12-21T11:35:58.468Z] Retrying EAS CLI... (2 left)
+[2025-12-21T11:35:58.468Z] Running: eas-cli build -p ios --local
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:36:02.607Z] EAS CLI exited with code 1
+[2025-12-21T11:36:02.607Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:36:02.607Z] Session duration: 16.2s
+[2025-12-21T11:36:02.607Z] Total requests: 1
+[2025-12-21T11:36:02.607Z] Successful: 1 (100.0%)
+[2025-12-21T11:36:02.607Z] Failed: 0
+[2025-12-21T11:36:02.607Z] Response times - Avg: 292.00ms, Min: 292ms, Max: 292ms
+[2025-12-21T11:36:02.607Z] 
+--- Load Analysis ---
+[2025-12-21T11:36:02.607Z] Average RPS: 0.06
+[2025-12-21T11:36:02.607Z] Peak RPS: 1
+[2025-12-21T11:36:02.607Z] Peak window: 2025-12-21T11:35:46.000Z → 2025-12-21T11:35:47.000Z
+[2025-12-21T11:36:02.607Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:36:02.607Z] No failure windows detected (100% success rate)
+[2025-12-21T11:36:02.607Z] ===============================
+
+[2025-12-21T11:36:02.607Z] Retrying EAS CLI... (1 left)
+[2025-12-21T11:36:02.607Z] Running: eas-cli build -p ios --local
+Resolved "production" environment for the build. Learn more: https://docs.expo.dev/eas/environment-variables/#setting-the-environment-for-your-builds
+No environment variables with visibility "Plain text" and "Sensitive" found for the "production" environment on EAS.
+
+- Incrementing buildNumber from 6 to 7.
+✔ Incremented buildNumber from 6 to 7.
+ios.buildNumber field in app config is ignored when version source is set to remote, but this value will still be in the manifest available via expo-constants. It's recommended to remove this value from app config.
+✔ Using remote iOS credentials (Expo server)
+
+If you provide your Apple account credentials we will be able to generate all necessary build credentials and fully validate them.
+This is optional, but without Apple account access you will need to provide all the missing values manually and we can only run minimal validation on them.
+Input is required, but stdin is not readable. Failed to display prompt: Do you want to log in to your Apple account?
+    Error: build command failed.
+[2025-12-21T11:36:18.494Z] EAS CLI exited with code 1
+[2025-12-21T11:39:04.707Z] EAS CLI Debug Session Started - PID: 57551
+[2025-12-21T11:39:04.712Z] Log file: /Users/user/Desktop/MyApps/StickerSmash/eas-debug.log (max size: 10MB)
+[2025-12-21T11:39:04.712Z] Current log size: 13KB
+[2025-12-21T11:39:04.712Z] Pre-flight GraphQL connectivity test starting...
+[2025-12-21T11:39:04.712Z] GraphQL request attempt #1 START
+[2025-12-21T11:39:04.983Z] GraphQL request attempt #1 END, Status: 200, Duration: 271ms, Body: {"data":{"viewer":{"username":"kirills"}}}
+
+[2025-12-21T11:39:06.765Z] Running: eas-cli build -p ios --non-interactive
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:39:11.907Z] EAS CLI exited with code 1
+[2025-12-21T11:39:11.908Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:39:11.908Z] Session duration: 7.2s
+[2025-12-21T11:39:11.908Z] Total requests: 1
+[2025-12-21T11:39:11.908Z] Successful: 1 (100.0%)
+[2025-12-21T11:39:11.908Z] Failed: 0
+[2025-12-21T11:39:11.908Z] Response times - Avg: 271.00ms, Min: 271ms, Max: 271ms
+[2025-12-21T11:39:11.908Z] 
+--- Load Analysis ---
+[2025-12-21T11:39:11.908Z] Average RPS: 0.14
+[2025-12-21T11:39:11.908Z] Peak RPS: 1
+[2025-12-21T11:39:11.908Z] Peak window: 2025-12-21T11:39:04.000Z → 2025-12-21T11:39:05.000Z
+[2025-12-21T11:39:11.908Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:39:11.908Z] No failure windows detected (100% success rate)
+[2025-12-21T11:39:11.908Z] ===============================
+
+[2025-12-21T11:39:11.908Z] Retrying EAS CLI... (3 left)
+[2025-12-21T11:39:11.908Z] Running: eas-cli build -p ios --non-interactive
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:39:16.325Z] EAS CLI exited with code 1
+[2025-12-21T11:39:16.325Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:39:16.325Z] Session duration: 11.6s
+[2025-12-21T11:39:16.325Z] Total requests: 1
+[2025-12-21T11:39:16.325Z] Successful: 1 (100.0%)
+[2025-12-21T11:39:16.325Z] Failed: 0
+[2025-12-21T11:39:16.325Z] Response times - Avg: 271.00ms, Min: 271ms, Max: 271ms
+[2025-12-21T11:39:16.325Z] 
+--- Load Analysis ---
+[2025-12-21T11:39:16.325Z] Average RPS: 0.09
+[2025-12-21T11:39:16.325Z] Peak RPS: 1
+[2025-12-21T11:39:16.325Z] Peak window: 2025-12-21T11:39:04.000Z → 2025-12-21T11:39:05.000Z
+[2025-12-21T11:39:16.325Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:39:16.325Z] No failure windows detected (100% success rate)
+[2025-12-21T11:39:16.325Z] ===============================
+
+[2025-12-21T11:39:16.325Z] Retrying EAS CLI... (2 left)
+[2025-12-21T11:39:16.325Z] Running: eas-cli build -p ios --non-interactive
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:39:21.313Z] EAS CLI exited with code 1
+[2025-12-21T11:39:21.313Z] 
+=== GraphQL Request Summary ===
+[2025-12-21T11:39:21.314Z] Session duration: 16.6s
+[2025-12-21T11:39:21.314Z] Total requests: 1
+[2025-12-21T11:39:21.314Z] Successful: 1 (100.0%)
+[2025-12-21T11:39:21.314Z] Failed: 0
+[2025-12-21T11:39:21.314Z] Response times - Avg: 271.00ms, Min: 271ms, Max: 271ms
+[2025-12-21T11:39:21.314Z] 
+--- Load Analysis ---
+[2025-12-21T11:39:21.314Z] Average RPS: 0.06
+[2025-12-21T11:39:21.314Z] Peak RPS: 1
+[2025-12-21T11:39:21.314Z] Peak window: 2025-12-21T11:39:04.000Z → 2025-12-21T11:39:05.000Z
+[2025-12-21T11:39:21.314Z] 
+--- Failure Heatmap ---
+[2025-12-21T11:39:21.314Z] No failure windows detected (100% success rate)
+[2025-12-21T11:39:21.314Z] ===============================
+
+[2025-12-21T11:39:21.314Z] Retrying EAS CLI... (1 left)
+[2025-12-21T11:39:21.314Z] Running: eas-cli build -p ios --non-interactive
+
+request to https://api.expo.dev/graphql failed, reason: read ECONNRESET
+    Error: GraphQL request failed.
+[2025-12-21T11:39:28.087Z] EAS CLI exited with code 1
